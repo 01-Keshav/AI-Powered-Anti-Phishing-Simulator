@@ -12,7 +12,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 
-ROOT = Path(__file__).resolve().parent.parent.parent
+ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
@@ -62,6 +62,11 @@ def sidebar():
     st.sidebar.markdown("---")
     st.sidebar.markdown("### 🔑 CREDENTIALS")
     api_key_env = os.environ.get("GEMINI_API_KEY", "")
+    if not api_key_env:
+        try:
+            api_key_env = st.secrets.get("GEMINI_API_KEY", "")
+        except Exception:
+            pass
     api_key_input = st.sidebar.text_input(
         "Gemini API Key",
         value=api_key_env if api_key_env else st.session_state.get("gemini_key", ""),

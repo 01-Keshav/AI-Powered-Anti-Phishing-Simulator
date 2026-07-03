@@ -58,6 +58,11 @@ with st.sidebar:
     # API key setup
     st.markdown("### 🔑 CREDENTIALS")
     api_key_env = os.environ.get("GEMINI_API_KEY", "")
+    if not api_key_env:
+        try:
+            api_key_env = st.secrets.get("GEMINI_API_KEY", "")
+        except Exception:
+            pass
     api_key_input = st.text_input(
         "Gemini API Key",
         value=api_key_env if api_key_env else st.session_state.get("gemini_key", ""),
