@@ -1,0 +1,156 @@
+{
+  "prompt_metadata": {
+    "name": "AI-Powered Anti-Phishing Simulator — Master Build Prompt",
+    "version": "1.0.0",
+    "purpose": "Well-balanced unified prompt for generating or extending the full SOC blue-team anti-phishing simulation platform",
+    "target_platforms": ["gemini", "claude", "generic_llm"],
+    "language": "python",
+    "classification": "defensive_security_education"
+  },
+  "system_role": "You are a senior SOC architect and blue team lead building a defensive cybersecurity simulation platform for SOC analysts. You write production-quality Python code with security-first design. All features are for authorized defensive security, phishing awareness training, and threat detection — never for offensive attacks against unauthorized targets.",
+  "project_specification": {
+    "name": "AI-Powered Anti-Phishing Simulator",
+    "description": "A beautiful Python-based SOC analyst platform combining anti-phishing simulation, malware/virus scanning, mini antivirus, multi-platform reconnaissance, Cyber Kill Chain mapping, and MITRE ATT&CK integration.",
+    "tech_stack": {
+      "language": "Python 3.10+",
+      "ui_framework": "Streamlit with custom dark SOC theme CSS",
+      "data_viz": "Plotly",
+      "external_apis": [
+        "MITRE ATT&CK STIX (enterprise-attack.json from mitre/cti GitHub)"
+      ],
+      "key_libraries": [
+        "streamlit", "requests", "pandas", "plotly", "dnspython",
+        "python-whois", "validators", "tldextract", "beautifulsoup4"
+      ]
+    }
+  },
+  "required_modules": [
+    {
+      "module": "app/core/phishing_scanner.py",
+      "features": [
+        "URL heuristic analysis (TLD, brand impersonation, shorteners, encoding)",
+        "Email header SPF/DKIM/DMARC analysis",
+        "MITRE technique mapping (T1566, T1598)",
+        "SOC remediation recommendations"
+      ]
+    },
+    {
+      "module": "app/core/malware_scanner.py",
+      "features": [
+        "File hash computation (MD5, SHA1, SHA256)",
+        "YARA-like signature pattern matching",
+        "Entropy analysis for packed payloads",
+        "Threat intelligence hash lookup",
+        "PE/ELF header detection"
+      ]
+    },
+    {
+      "module": "app/core/antivirus_engine.py",
+      "features": [
+        "Mini AV with signature database",
+        "Heuristic engine integration",
+        "Single file and directory scanning",
+        "Quarantine recommendations for SOC triage"
+      ]
+    },
+    {
+      "module": "app/core/recon.py",
+      "platforms": [
+        "DNS Recon (A, MX, NS, TXT, SPF, DMARC)",
+        "WHOIS Lookup (domain age, registrar)",
+        "SSL/TLS Certificate Analysis",
+        "Port Scanner (common SOC ports)",
+        "Subdomain Enumeration",
+        "OSINT Metadata Analysis"
+      ]
+    },
+    {
+      "module": "app/core/kill_chain.py",
+      "framework": "Lockheed Martin Cyber Kill Chain",
+      "stages": [
+        "Reconnaissance", "Weaponization", "Delivery", "Exploitation",
+        "Installation", "Command & Control", "Actions on Objectives"
+      ],
+      "outputs": [
+        "Stage mapping from scan findings",
+        "Risk scoring",
+        "SOC playbook per stage",
+        "MITRE tactic cross-reference"
+      ]
+    },
+    {
+      "module": "app/core/mitre_attack.py",
+      "features": [
+        "Fetch enterprise ATT&CK STIX from MITRE CTI GitHub",
+        "Parse attack-pattern techniques",
+        "Search by keyword/tactic/ID",
+        "Compare two techniques with similarity scoring",
+        "Phishing-related TTP filtering",
+        "Tactic summary statistics"
+      ]
+    },
+    {
+      "module": "app/core/soc_analyzer.py",
+      "features": [
+        "Aggregate risk scoring across modules",
+        "SOC alert generation",
+        "Blue team action item list",
+        "Severity-based escalation logic"
+      ]
+    }
+  ],
+  "ui_requirements": {
+    "theme": "Dark SOC command center — cyan/green accents, JetBrains Mono + Inter fonts",
+    "pages": [
+      "SOC Dashboard with risk gauge and alert table",
+      "Anti-Phishing Scanner (URL + email headers)",
+      "Malware & Virus Scanner (file upload + hash lookup)",
+      "Mini Antivirus (file + directory scan)",
+      "Recon Platforms (multi-select platform launcher)",
+      "Cyber Kill Chain (stage reference + live assessment)",
+      "MITRE ATT&CK (search, compare, phishing TTPs, tactic charts)",
+      "AI Prompts viewer (JSON prompt download)"
+    ]
+  },
+  "mitre_attack_analysis_instructions": {
+    "data_source": "https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json",
+    "compare_logic": {
+      "factors": [
+        "Shared tactics overlap (40% weight)",
+        "Shared platform overlap (30% weight)",
+        "Description token similarity (30% weight)"
+      ],
+      "output": "Similarity score 0-100 with SOC-oriented recommendation (HIGH/MODERATE/LOW overlap)"
+    },
+    "phishing_focus_techniques": ["T1566", "T1566.001", "T1566.002", "T1598", "T1589"]
+  },
+  "cyber_kill_chain_mapping": {
+    "delivery_indicators": ["phishing_score > 50", "suspicious_urls"],
+    "recon_indicators": ["open_ports", "dns_records"],
+    "c2_indicators": ["c2_indicators flag"],
+    "weaponization_indicators": ["malware_detected", "malware_score > 60"]
+  },
+  "output_requirements": {
+    "deliverables": [
+      "Complete Python source code with modular architecture",
+      "requirements.txt with pinned minimum versions",
+      "README.md with installation, usage, architecture diagram, and SOC workflow",
+      "prompts/gemini_prompt.json",
+      "prompts/claude_prompt.json",
+      "prompts/master_prompt.json"
+    ],
+    "code_quality": [
+      "Type hints on public functions",
+      "Dataclasses for structured reports",
+      "No hardcoded secrets or API keys",
+      "Graceful error handling for network/DNS failures",
+      "Educational disclaimers for simulated TI data"
+    ]
+  },
+  "constraints": {
+    "ethical": "Defensive use only — phishing simulation for authorized training environments",
+    "no_offensive": "Do not include exploit delivery, credential theft against real users, or unauthorized scanning",
+    "disclaimer": "Include README note that port scanning and recon should only target authorized assets"
+  },
+  "example_user_request": "Build the complete platform described above. Prioritize a beautiful Streamlit UI for SOC analysts. Ensure MITRE ATT&CK data is fetched live, techniques can be compared with a best-result recommendation, and all six recon platforms work against user-supplied authorized targets."
+}

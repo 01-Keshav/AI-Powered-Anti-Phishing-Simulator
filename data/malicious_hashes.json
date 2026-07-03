@@ -1,0 +1,44 @@
+{
+  "44d88612fe83b82fb7699ada127d4b47": {
+    "name": "EICAR Standard Anti-Virus Test File",
+    "type": "Test File / Indicator",
+    "severity": "Informational",
+    "description": "Standard antivirus verification test file. Used to safely confirm AV detection functionality."
+  },
+  "275a021bbfb6489e54d471899f7db9d1663fc695ec2fe2a2c4538aabf651fd0f": {
+    "name": "EICAR Standard Anti-Virus Test File (SHA256)",
+    "type": "Test File / Indicator",
+    "severity": "Informational",
+    "description": "Standard antivirus verification test file. Used to safely confirm AV detection functionality."
+  },
+  "db349b97c37d22f5ea1d1841e3c87994": {
+    "name": "WannaCry Ransomware v1.0",
+    "type": "Ransomware / Cryptor",
+    "severity": "Critical",
+    "description": "Self-replicating ransomware cryptoworm targeting Windows SMB (EternalBlue vulnerability). Encrypts data and demands payment."
+  },
+  "24d00b42f2d03dcd480d37e178c815642435047ae2a9687780d1768f8e8fbc3f": {
+    "name": "WannaCry Ransomware payload (SHA256)",
+    "type": "Ransomware / Cryptor",
+    "severity": "Critical",
+    "description": "Self-replicating ransomware cryptoworm targeting Windows SMB (EternalBlue vulnerability). Encrypts data and demands payment."
+  },
+  "3a2468307d8b5c92c9b4e72352b21703": {
+    "name": "Mimikatz LSASS Dump Utility",
+    "type": "Credential Stealer / Hacktool",
+    "severity": "High",
+    "description": "Open-source credential theft program. Used to extract plaintext passwords, hash values, PINs, and Kerberos tickets from memory."
+  },
+  "f33e721a115456c6a46a5cb9f20e4b85d3b6641e7f3c4c95b77e8a93fb5f0a21": {
+    "name": "Mimikatz LSASS Dump Utility (SHA256)",
+    "type": "Credential Stealer / Hacktool",
+    "severity": "High",
+    "description": "Open-source credential theft program. Used to extract plaintext passwords, hash values, PINs, and Kerberos tickets from memory."
+  },
+  "d5999818817a3a9cf770020bb2629bbf": {
+    "name": "Cobalt Strike Beacon",
+    "type": "Trojan / RAT / C2",
+    "severity": "High",
+    "description": "Commercial adversary simulation software agent. Often repurposed by threat actors for persistent command and control."
+  }
+}

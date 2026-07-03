@@ -1,0 +1,82 @@
+{
+  "T1566": {
+    "name": "Phishing",
+    "tactic": "Initial Access",
+    "kill_chain_phase": "Delivery",
+    "description": "Adversaries may send phishing messages to gain access to victim systems. All forms of phishing are targeted, social engineering-based attempts to trick recipients into executing malicious code, providing credentials, or giving up sensitive information.",
+    "detection": "Analyze incoming email traffic for anomalies. Look for domain spoofing, external email warnings, suspicious attachments, and unrecognized links. Monitor host-level process creation from mail client processes.",
+    "mitigation": "User training, email authentication protocols (SPF, DKIM, DMARC), anti-virus scanner on mail servers, endpoint isolation, and restricting script execution."
+  },
+  "T1566.001": {
+    "name": "Phishing: Spearphishing Attachment",
+    "tactic": "Initial Access",
+    "kill_chain_phase": "Delivery",
+    "description": "Adversaries may send spearphishing emails with malicious attachments to execute code on victim machines. These attachments can contain macros, exploit documents, or executable installers.",
+    "detection": "Monitor process execution spawned by email clients (e.g., outlook.exe launching cmd.exe or powershell.exe). Perform static/dynamic sandboxing on email attachments.",
+    "mitigation": "Disable Office macros by default, implement application whitelisting, configure endpoint security to scan files upon download, and educate employees on document safety."
+  },
+  "T1566.002": {
+    "name": "Phishing: Spearphishing Link",
+    "tactic": "Initial Access",
+    "kill_chain_phase": "Delivery",
+    "description": "Adversaries may send spearphishing emails containing malicious links to lure victims to websites hosting exploits, drive-by downloads, or credential harvesting portals.",
+    "detection": "Monitor network connections made to newly registered or suspicious domains immediately after a user opens an email. Monitor email logs for bulk identical outbound links.",
+    "mitigation": "Implement web proxies, URL filtering, browser sandboxing, multi-factor authentication (MFA) to limit credential theft impacts, and URL rewriting/link scanning technologies."
+  },
+  "T1059": {
+    "name": "Command and Scripting Interpreter",
+    "tactic": "Execution",
+    "kill_chain_phase": "Exploitation",
+    "description": "Adversaries may abuse command and script interpreters to execute commands, scripts, or binaries. These interfaces are common in administrative environments and are highly leveraged by threat actors.",
+    "detection": "Enable script block logging (e.g., PowerShell Event ID 4104). Monitor command line arguments for suspicious flags like -NoProfile, -ExecutionPolicy Bypass, or hidden windows.",
+    "mitigation": "Restrict script interpreter permissions, enforce constrained language mode, and implement application control policies to block unauthorized scripts."
+  },
+  "T1059.001": {
+    "name": "Command and Scripting Interpreter: PowerShell",
+    "tactic": "Execution",
+    "kill_chain_phase": "Exploitation",
+    "description": "Adversaries may use PowerShell to execute commands and scripts. PowerShell is a powerful CLI and scripting language integrated into Windows, making it a primary post-exploitation vehicle.",
+    "detection": "Enable PowerShell transcription logging (Event ID 4104/4103). Audit process creation logs (Event ID 4688) targeting powershell.exe commands.",
+    "mitigation": "Deploy PowerShell v5 or higher, enforce code signing policies, restrict access to PowerShell using AppLocker/WDAC, and monitor for WMI and WinRM remote sessions."
+  },
+  "T1027": {
+    "name": "Obfuscated Files or Information",
+    "tactic": "Defense Evasion",
+    "kill_chain_phase": "Weaponization",
+    "description": "Adversaries may attempt to make an executable or file difficult to discover or analyze by encrypting, encoding, or otherwise obfuscating its contents.",
+    "detection": "Check for high entropy in files (indicates compression/encryption). Scan files for common decoding functions (e.g. base64, XOR routines, or custom packing signatures).",
+    "mitigation": "Implement automated unpacking/sandboxing systems, enforce file execution restrictions on temp directories, and monitor runtime process memory for newly decrypted payloads."
+  },
+  "T1105": {
+    "name": "Ingress Tool Transfer",
+    "tactic": "Command and Control",
+    "kill_chain_phase": "Command and Control",
+    "description": "Adversaries may transfer tools or other files from an external system into a compromised environment. Tools may be copied from an external server over standard protocols (HTTP/S, FTP, SMB).",
+    "detection": "Monitor network logs for downloads of executable content (EXEs, DLLs, ELF files) from external IPs. Track command lines invoking `Invoke-WebRequest`, `curl`, `wget`, or `certutil` with remote URLs.",
+    "mitigation": "Restrict outbound network access to authorized proxy servers. Block access to file hosting and code repository sites if not required for business operations."
+  },
+  "T1071.001": {
+    "name": "Application Layer Protocol: Web Protocols",
+    "tactic": "Command and Control",
+    "kill_chain_phase": "Command and Control",
+    "description": "Adversaries may communicate using application layer protocols associated with web traffic (HTTP, HTTPS, HTTP/2, HTTP/3) to blend in with normal network activity and bypass firewall filters.",
+    "detection": "Inspect web proxy logs for anomalous User-Agents, repetitive beaconing patterns (constant intervals), and connections to un-categorized or newly registered domains.",
+    "mitigation": "Enforce SSL/TLS decryption and inspection at the network gateway. Restrict outbound web traffic to known-good reputation categories. Implement Host Header validation."
+  },
+  "T1053.005": {
+    "name": "Scheduled Task/Job: Scheduled Task",
+    "tactic": "Persistence / Privilege Escalation",
+    "kill_chain_phase": "Installation",
+    "description": "Adversaries may abuse task scheduling utilities (like Windows Task Scheduler or cron) to facilitate initial or recurring execution of malicious code, ensuring persistence in a target network.",
+    "detection": "Monitor Windows Event Logs (Microsoft-Windows-TaskScheduler/Operational, Event ID 106 for task creation). Track command lines utilizing `schtasks.exe` or `at` command line tools.",
+    "mitigation": "Limit task creation permissions to administrators. Enable credential guards and restrict access to remote task scheduling APIs."
+  },
+  "T1204.002": {
+    "name": "User Execution: Malicious File",
+    "tactic": "Execution",
+    "kill_chain_phase": "Exploitation",
+    "description": "Adversaries may rely on a user opening a malicious file (e.g., clicking on a spearphished attachment, running a downloaded setup program) to execute payload code.",
+    "detection": "Track file-open events in user directories followed by rapid creation of sub-processes. Monitor web browser and mail client downloads.",
+    "mitigation": "Disable autoplay/autorun on mountable drives, restrict user write access in system root directories, and apply robust local security policies to block double-click execution of dangerous scripts (e.g., VBS, JS, WSF)."
+  }
+}

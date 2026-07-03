@@ -1,0 +1,51 @@
+{
+  "prompt_metadata": {
+    "model": "anthropic-claude",
+    "model_versions": ["claude-sonnet-4-20250514", "claude-3-5-sonnet-20241022"],
+    "purpose": "Generate or enhance the AI-Powered Anti-Phishing SOC Simulation Platform",
+    "max_tokens_recommendation": 8192,
+    "response_format": "structured_code_output"
+  },
+  "system": "You are Claude, acting as a Staff SOC Platform Engineer specializing in blue team defensive operations. You produce clean, modular Python code for SOC analyst tooling. Your outputs support authorized phishing simulation, threat detection, malware triage, and MITRE ATT&CK-aligned analysis. You refuse to build offensive tooling for unauthorized targets.",
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Build a complete **AI-Powered Anti-Phishing Simulation Platform** in Python for SOC analysts. Requirements below — deliver full source code, requirements.txt, and GitHub README.\n\n## Platform Overview\nA dark-themed Streamlit SOC command center with:\n1. **Anti-Phishing Scanner** — URL heuristics + email header analysis\n2. **Malware & Virus Scanner** — file upload, hash lookup, YARA-like rules, entropy analysis\n3. **Mini Antivirus (BlueShield AV)** — signature DB + heuristic scanning\n4. **6 Recon Platforms** — DNS, WHOIS, SSL/TLS, Port Scan, Subdomain Enum, OSINT\n5. **Cyber Kill Chain** — 7-stage Lockheed Martin framework with SOC playbooks\n6. **MITRE ATT&CK** — live STIX fetch, search, compare two techniques, best-result recommendation\n7. **SOC Dashboard** — risk gauge, alerts, blue team actions\n\n## MITRE ATT&CK Integration (Critical)\n- Fetch: `https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json`\n- Parse attack-pattern objects into structured techniques\n- **Compare function**: Given two technique IDs (e.g., T1566 vs T1566.001):\n  - Calculate shared tactics (40%), shared platforms (30%), description similarity (30%)\n  - Output similarity score 0-100\n  - Provide SOC recommendation: HIGH/MODERATE/LOW overlap with actionable guidance\n- Filter phishing-related techniques (T1566, credential harvesting, spearphishing keywords)\n- Export tactic summary for bar charts\n\n## Cyber Kill Chain\nMap scanner findings to stages:\n- Reconnaissance ← DNS/port recon flags\n- Delivery ← phishing URLs\n- Weaponization/Installation ← malware detections\n- C2 ← beacon indicators\n- Actions on Objectives ← credential harvest\n\nEach stage needs: description, MITRE tactic mapping, SOC playbook steps.\n\n## Recon Platforms (6 total)\n| Platform | Key Checks |\n|----------|------------|\n| DNS Recon | A, MX, NS, TXT, SPF, DMARC |\n| WHOIS | Registrar, domain age (<30 days = phishing flag) |\n| SSL/TLS | Cert validity, self-signed detection |\n| Port Scanner | Common ports 21-8443 with risk flags |\n| Subdomain Enum | Wordlist-based discovery |\n| OSINT | URL validation, hash fingerprint |\n\n## UI Requirements\n- Dark SOC theme: #0a0e17 background, cyan (#00d4ff) and green (#00ff88) accents\n- Fonts: Inter + JetBrains Mono\n- Plotly gauges and bar charts\n- Sidebar navigation with 8 pages\n- Severity badges: critical/high/medium/low\n\n## Code Architecture\n```\napp/\n  core/\n    phishing_scanner.py\n    malware_scanner.py\n    antivirus_engine.py\n    recon.py\n    kill_chain.py\n    mitre_attack.py\n    soc_analyzer.py\n  ui/\n    components.py\n  main.py\nprompts/\n  gemini_prompt.json\n  claude_prompt.json\n  master_prompt.json\nrequirements.txt\nREADME.md\nrun.py\n```\n\n## Output Rules\n1. Use dataclasses for all report types (PhishingReport, MalwareReport, AttackComparison, etc.)\n2. Type hints on all public functions\n3. Graceful error handling for network/DNS failures\n4. Simulated malware hashes clearly labeled as demo/educational\n5. README must include: badges, install steps, feature list, architecture mermaid diagram, SOC workflow, ethical disclaimer\n6. All features are for **authorized defensive security and training only**\n\n## Best Result Criteria (MITRE Compare)\nWhen comparing techniques, the 'best result' for a SOC analyst means:\n- If similarity ≥ 70%: consolidate detection rules, correlate alerts\n- If 40-69%: map shared detections, differentiate by data source\n- If < 40%: prioritize based on threat model and recent incidents\n\nGenerate the complete platform now."
+        }
+      ]
+    }
+  ],
+  "parameters": {
+    "model": "claude-sonnet-4-20250514",
+    "max_tokens": 8192,
+    "temperature": 0.3
+  },
+  "expected_output_structure": {
+    "files": [
+      "app/core/*.py (7 modules)",
+      "app/ui/components.py",
+      "app/main.py",
+      "requirements.txt",
+      "README.md",
+      "run.py",
+      "prompts/*.json (3 files)"
+    ],
+    "validation_checklist": [
+      "Streamlit app runs with: streamlit run app/main.py",
+      "MITRE data fetches without API key",
+      "Technique compare returns similarity score and recommendation",
+      "All 6 recon platforms execute against a domain input",
+      "Kill chain maps findings to stages with playbooks",
+      "Phishing URL scanner returns score 0-100 with MITRE IDs"
+    ]
+  },
+  "follow_up_prompts": {
+    "enhance_mitre": "Add export to CSV/JSON for compared techniques and integrate ATT&CK Navigator layer export.",
+    "enhance_soc": "Add SIEM-style log ingestion parser (CEF/JSON) with auto kill-chain staging.",
+    "enhance_phishing": "Add HTML email body parser with link extraction and batch URL scanning.",
+    "enhance_av": "Add ClamAV subprocess integration as optional backend with fallback to built-in engine."
+  }
+}

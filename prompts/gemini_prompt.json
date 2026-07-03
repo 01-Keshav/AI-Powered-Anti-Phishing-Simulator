@@ -1,0 +1,128 @@
+{
+  "prompt_metadata": {
+    "model": "google-gemini",
+    "model_versions": ["gemini-2.0-flash", "gemini-1.5-pro"],
+    "purpose": "Generate or enhance the AI-Powered Anti-Phishing SOC Simulation Platform",
+    "temperature_recommendation": 0.3,
+    "response_format": "code_and_documentation"
+  },
+  "system_instruction": "You are Gemini acting as a Principal Security Engineer and SOC platform developer. Build defensive cybersecurity tools in Python for blue team SOC analysts. Focus on anti-phishing detection, malware analysis, MITRE ATT&CK integration, and Cyber Kill Chain mapping. Never generate offensive attack tools or code targeting unauthorized systems.",
+  "generation_config": {
+    "temperature": 0.3,
+    "top_p": 0.95,
+    "max_output_tokens": 8192,
+    "response_mime_type": "text/plain"
+  },
+  "user_prompt": {
+    "task": "Create or extend an AI-Powered Anti-Phishing Simulation Platform for SOC analysts",
+    "context": {
+      "user_role": "SOC Analyst / Blue Team Operator",
+      "primary_language": "Python",
+      "ui_preference": "Beautiful dark-themed Streamlit dashboard with SOC metrics, gauges, and interactive charts"
+    },
+    "feature_requirements": {
+      "anti_phishing": {
+        "url_analysis": [
+          "Suspicious TLD detection",
+          "Brand impersonation heuristics",
+          "URL shortener and encoding detection",
+          "IP-in-URL and credential harvesting patterns"
+        ],
+        "email_analysis": [
+          "SPF/DKIM/DMARC header validation",
+          "Social engineering language detection",
+          "Sender alignment checks"
+        ],
+        "mitre_mapping": ["T1566", "T1566.001", "T1566.002", "T1598"]
+      },
+      "malware_virus_scanning": {
+        "capabilities": [
+          "Multi-hash computation (MD5, SHA1, SHA256)",
+          "YARA-like pattern rules for scripts and binaries",
+          "Shannon entropy analysis",
+          "PE/ELF magic byte detection",
+          "Simulated threat intelligence hash blocklist"
+        ],
+        "mitre_mapping": ["T1204", "T1059", "T1027", "T1105"]
+      },
+      "mini_antivirus": {
+        "engine_name": "BlueShield AV Engine",
+        "features": [
+          "Signature database with byte patterns",
+          "Heuristic engine passthrough",
+          "File and directory scanning modes",
+          "Quarantine recommendation output"
+        ]
+      },
+      "recon_platforms": [
+        {"name": "DNS Recon", "checks": ["A", "AAAA", "MX", "NS", "TXT", "SPF", "DMARC"]},
+        {"name": "WHOIS Lookup", "checks": ["registrar", "domain_age", "name_servers"]},
+        {"name": "SSL/TLS Analysis", "checks": ["certificate validity", "SAN", "protocol version"]},
+        {"name": "Port Scanner", "checks": ["21", "22", "25", "80", "443", "445", "3389"]},
+        {"name": "Subdomain Enum", "checks": ["common subdomain wordlist"]},
+        {"name": "OSINT Metadata", "checks": ["URL validation", "hash fingerprinting"]}
+      ],
+      "cyber_kill_chain": {
+        "framework": "Lockheed Martin 7-stage Kill Chain",
+        "stages": [
+          "Reconnaissance", "Weaponization", "Delivery", "Exploitation",
+          "Installation", "Command & Control", "Actions on Objectives"
+        ],
+        "outputs": ["stage detection", "risk score", "SOC playbook per stage"]
+      },
+      "mitre_attack": {
+        "data_url": "https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json",
+        "operations": [
+          "Fetch and parse STIX attack-patterns",
+          "Search techniques by keyword",
+          "Compare two techniques with similarity score",
+          "Return best SOC recommendation based on overlap analysis",
+          "Filter phishing-related TTPs",
+          "Generate tactic distribution chart data"
+        ],
+        "compare_algorithm": {
+          "shared_tactics_weight": 0.4,
+          "shared_platforms_weight": 0.3,
+          "description_similarity_weight": 0.3,
+          "recommendation_thresholds": {
+            "high_overlap": 70,
+            "moderate_overlap": 40
+          }
+        }
+      },
+      "soc_dashboard": {
+        "widgets": [
+          "Risk gauge (0-100)",
+          "Alert table with severity badges",
+          "Blue team action checklist",
+          "Module metric cards"
+        ]
+      }
+    },
+    "architecture": {
+      "structure": {
+        "app/core/": ["phishing_scanner.py", "malware_scanner.py", "antivirus_engine.py", "recon.py", "kill_chain.py", "mitre_attack.py", "soc_analyzer.py"],
+        "app/ui/": ["components.py"],
+        "app/": ["main.py"],
+        "prompts/": ["gemini_prompt.json", "claude_prompt.json", "master_prompt.json"],
+        "root": ["requirements.txt", "README.md", "run.py"]
+      }
+    },
+    "output_format": "Provide complete, runnable Python files. Use dataclasses for reports. Include type hints. Add a comprehensive README.md suitable for GitHub with badges, architecture mermaid diagram, and SOC workflow section.",
+    "ethical_constraints": [
+      "Defensive and educational use only",
+      "Recon and scanning limited to authorized targets",
+      "Simulated TI data clearly labeled as demo/educational",
+      "No real credential harvesting or phishing page generation"
+    ]
+  },
+  "example_api_call": {
+    "note": "Use with Gemini API — pass system_instruction and user_prompt as contents",
+    "endpoint": "generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
+    "sample_payload": {
+      "system_instruction": {"parts": [{"text": "<system_instruction from this file>"}]},
+      "contents": [{"role": "user", "parts": [{"text": "<serialized user_prompt section>"}]}],
+      "generationConfig": {"temperature": 0.3, "maxOutputTokens": 8192}
+    }
+  }
+}
